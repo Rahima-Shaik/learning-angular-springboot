@@ -1,0 +1,11 @@
+<input [(ngModel)]="newTodo" placeholder="Enter todo" />
+<button (click)="addTodo()">Add</button>
+
+<ul>
+  <li *ngFor="let todo of todos">
+    {{todo.id}}
+    {{todo.title}}
+    {{todo.completed}}
+    <button (click)="deleteTodo(todo.id)">Delete</button>
+  </li>
+</ul>
