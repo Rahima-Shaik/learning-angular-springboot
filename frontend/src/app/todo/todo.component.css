@@ -1,0 +1,30 @@
+.toolbar {
+  justify-content: center;
+  font-weight: 600;
+}
+
+.add-task-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+table {
+  width: 70%;
+  margin: auto;
+}
+
+.table-container {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  width: 50%;
+}
+
+.mat-column-action{
+  text-align: right;       
+  padding-right: 40px;
+}
+
+
+
