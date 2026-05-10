@@ -27,7 +27,7 @@
         <button mat-icon-button color="primary">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn">
+        <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)">
           <mat-icon>delete</mat-icon>
         </button>
         </td>
@@ -37,15 +37,3 @@
     <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
   </table>
 </div>
-
-<!-- Just sample code -->
-<!-- <input [(ngModel)]="newTodo" placeholder="Enter todo" />
-<button (click)="addTodo()">Add</button>
-<ul>
-  <li *ngFor="let todo of todos">
-    {{todo.id}}
-    {{todo.title}}
-    {{todo.completed}}
-    <button (click)="deleteTodo(todo.id)">Delete</button>
-  </li>
-</ul> -->
