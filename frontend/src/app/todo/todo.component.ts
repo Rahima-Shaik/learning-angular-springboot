@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TodoService } from '../services/todo.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Todo } from '../models/todo';
 import { TodoDialogComponent } from './todo-dialog-popup/todo-dialog/todo-dialog.component';
@@ -21,7 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class TodoComponent {
   todos: Todo[] = [];
   columnsToDisplay = ['task', 'completed', 'action'];
-  showDialog = false;
+  @ViewChild(MatTable) table!: MatTable<Todo>;
 
   constructor(private service: TodoService, private dialog: MatDialog) { }
 
@@ -41,14 +41,36 @@ export class TodoComponent {
     }
   }
 
+  updateTodo(id:number,todo:Todo){
+    const dialogRef = this.dialog.open(TodoDialogComponent, {
+      width: '400px',
+      disableClose: true,
+      data:todo //pass existing todo into dialog
+    });
+    dialogRef.afterClosed().subscribe((updatedTodo: Todo) => {
+     if(updatedTodo)
+     {
+      const index = this.todos.findIndex(t => t.id === id)
+      if(index!== -1)
+      {
+        this.todos[index] = updatedTodo;
+        this.table.renderRows(); // refresh table
+      }
+     }
+    });
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(TodoDialogComponent, {
       width: '400px',
-      disableClose: false
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((newTodo: Todo) => {
+      if(newTodo){
       this.todos.push(newTodo); // update list immediately
+      this.table.renderRows();
+      }
     });
   }
 }

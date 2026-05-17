@@ -1,22 +1,26 @@
 <div class="dialog-container mat-elevation-z8">
   <div class="dialog-header">
-    <h3>Add new Task</h3>
+    <h3>{{ data? 'Update Task' : 'Add New Task'}}</h3>
     <button mat-icon-button class="close-btn" (click)="onClose()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <mat-form-field appearance="outline" style="width: 100%;">
-    <mat-label>Add New Todo</mat-label>
-    <input matInput [(ngModel)]="taskTitle" />
-  </mat-form-field>
+  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
 
-  <div class="checkbox-row">
-  <mat-checkbox [(ngModel)]="completed">Mark as Completed</mat-checkbox>
-  </div>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Add New Todo</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!taskTitle">
-    Submit
-  </button>
+    <div class="checkbox-row">
+      <mat-checkbox formControlName="completed">Mark as Completed</mat-checkbox>
+    </div>
+
+    <div class="submit-btn">
+    <button mat-raised-button color="primary" type="submit" [disabled]="todoForm.invalid">
+      {{ data ? 'Update':'Submit'}}
+    </button>
+    </div> 
+  </form>
 </div>
-
